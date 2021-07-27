@@ -14,7 +14,8 @@ module.exports = {
     colors: {
       "dark-gray": "#323F4B",
       "light-gray": "#DBE0E6",
-      "gray": "#9AA5B1"
+      "gray": "#9AA5B1",
+      "transparent": "transparent"
     },
     extend: {
     },

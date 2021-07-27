@@ -8,19 +8,25 @@ import SearchBar from '../components/SearchBar'
 import PhotoCard from '../components/PhotoCard';
 
 export default function Home() {
-  const [search, setSearch] = useState<string>("hi");
+  const [search, setSearch] = useState<string>("");
   const [results, setResults] = useState<Photo[]>([])
 
   const getResults = async () => {
     try {
-      const { data: photos } = await axios.get("https://api.unsplash.com/photos?client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk");
-      setResults(photos);
+
+      const { data: dailyPhotos } = await axios.get(`https://api.unsplash.com/photos?client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`)
+
+      const { data: photos } = await axios.get(`https://api.unsplash.com/search/photos?query=${search}&client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`);
+      
+      const displayPhotos = photos.results.length > 0 ? photos.results : dailyPhotos;
+      
+      setResults(displayPhotos);
     } catch (e) {
       console.error(e);
     }
   }
 
-  console.log(search)
+  console.log(results);
 
   useEffect(() => {
     getResults()
