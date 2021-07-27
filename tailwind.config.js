@@ -4,16 +4,19 @@ module.exports = {
   theme: {
     fontFamily: {
       display: ["SF Pro Display", "sans-serif"],
-    }, fontSize: {
-      sm: ["14px", "20px"],
+    }, 
+    fontSize: {
+      sm: ["14px", "17px"],
       base: ["16px", "24px"],
       lg: ["20px", "28px"],
       xl: ["34px", "41px"],
     },
+    colors: {
+      "dark-gray": "#323F4B",
+      "light-gray": "#DBE0E6",
+      "gray": "#9AA5B1"
+    },
     extend: {
-      colors: {
-        "dark-gray": "#323F4B",
-      },
     },
   },
   variants: {
