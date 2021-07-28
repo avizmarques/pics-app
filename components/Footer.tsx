@@ -13,7 +13,7 @@ export default function Footer() {
   return (
     <div className="z-50 backdrop-filter backdrop-blur-lg w-screen h-24 fixed bottom-0">
       <div className="bg-white w-full h-full opacity-70" />
-      <div className="absolute bottom-0 left-0 h-full w-full flex items-center px-8">
+      <div className="absolute bottom-0 left-0 h-full w-full flex items-center justify-center px-8">
         <Link href="/" passHref>
           <div className="flex flex-col justify-center items-center">
             <div className="h-6">

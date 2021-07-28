@@ -25,16 +25,16 @@ export default function Favorites() {
         <title>Favorite pics</title>
         <meta name="description" content="My favorite pictures" />
       </Head>
-      <main className="px-4 pt-8 flex flex-col">
-        <div className="mb-12">
-          <Link href="/" passHref>
+      <main className="px-6 sm:px-8 md:px-12 lg:px-24 pt-8 flex flex-col">
+        <Link href="/" passHref>
+          <div className="mb-12 flex sm:justify-end">
             <SearchBar />
-          </Link>
-        </div>
-        <div className="font-display text-2xl font-semibold text-dark-gray mb-4">
+          </div>
+        </Link>
+        <div className="font-display text-2xl font-semibold text-dark-gray mb-4 md:mb-6 lg:mb-8">
           Favorites
         </div>
-        <div className="h-screen w-full grid grid-cols-2 gap-4 md:grid-cols-4">
+        <div className="w-full grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {favorites &&
             favorites.length > 0 &&
             favorites.map((fav, i) => (
@@ -47,6 +47,7 @@ export default function Favorites() {
               />
             ))}
         </div>
+        <div className="h-52" />
       </main>
       <Footer />
     </div>

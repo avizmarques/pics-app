@@ -69,14 +69,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="px-4 pt-8 flex flex-col">
-        <div className="mb-12">
+      <main className="px-6 sm:px-8 md:px-12 lg:px-24 pt-8 flex flex-col">
+        <div className="mb-12 flex sm:justify-end">
           <SearchBar search={search} setSearch={setSearch} />
         </div>
-        <div className="font-display text-2xl font-semibold text-dark-gray mb-4">
-          Daily pictures
+        <div className="font-display text-2xl font-semibold text-dark-gray mb-4 md:mb-6 lg:mb-8">
+          {search.length > 0
+            ? `Search results for "${search}"`
+            : "Daily pictures"}
         </div>
-        <div className="h-screen w-full grid grid-cols-2 gap-4 md:grid-cols-4">
+        <div className="w-full grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {results &&
             results.length > 0 &&
             results.map((photo, i) => (
@@ -88,18 +90,8 @@ export default function Home() {
                 favorites={favorites}
               />
             ))}
-          {/* {favorites &&
-            favorites.length > 0 &&
-            favorites.map((fav, i) => (
-              <PhotoCard
-                key={i}
-                url={fav.url}
-                id={fav.id}
-                setFavorites={setFavorites}
-                favorites={favorites}
-              />
-            ))} */}
         </div>
+        <div className="h-52" />
       </main>
 
       <footer>
