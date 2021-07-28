@@ -11,8 +11,11 @@ import Footer from "../../components/Footer";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { data: photo } = await axios.get(
-    `https://api.unsplash.com/photos/${params.id}?client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
+    `https://api.unsplash.com/photos/${
+      params ? params.id : "Cr9hZrpC1Oc"
+    }?client_id=nqX4rDuguWWfD0YlLy_u5V9T7LaUoyIquPTxHZ0md1E`
   );
+  // client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk
 
   return {
     props: {
