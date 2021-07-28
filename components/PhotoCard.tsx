@@ -38,7 +38,6 @@ export default function PhotoCard({
       <button
         className="outline-none h-9 w-9 bg-white rounded-full absolute bottom-5 right-5 flex items-center justify-center"
         onClick={() => {
-          console.log(url);
           toggleFav(isFav, id, url);
         }}
       >

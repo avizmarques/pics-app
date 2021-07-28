@@ -7,46 +7,16 @@ import SearchBar from "../components/SearchBar";
 import PhotoCard from "../components/PhotoCard";
 import Footer from "../components/Footer";
 import { useFetch } from "../lib/useFetch";
+import { useFavs } from "../lib/useFavs";
 
 export default function Home() {
+  const { favorites, setFavorites } = useFavs();
+
   const [search, setSearch] = useState<string>("");
   const [page, setPage] = useState<number>(1);
 
-  // const [results, setResults] = useState<Photo[]>([]);
-
-  // const [loading, setLoading] = useState<boolean>(false);
-  // const [error, setError] = useState<boolean>(false);
-
-  // const getResults: (search: string, page: number) => void = async (
-  //   query,
-  //   page
-  // ) => {
-  //   try {
-  //     await setLoading(true);
-
-  //     const { data: dailyPhotos } = await axios.get(
-  //       `https://api.unsplash.com/photos?client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
-  //     );
-
-  //     const { data: photos } = await axios.get(
-  //       `https://api.unsplash.com/search/photos?query=${search}&page=1&client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
-  //     );
-
-  //     const displayPhotos =
-  //       photos.results.length > 0 ? photos.results : dailyPhotos;
-
-  //     setResults(displayPhotos);
-  //   } catch (e) {
-  //     setError(true);
-  //     console.error(e);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getResults(search, page);
-  // }, [search, page]);
-
   const { loading, error, results } = useFetch({ search, page });
+
   const loader = useRef<any>(null);
 
   const handleObserver = useCallback((entries) => {
@@ -68,23 +38,6 @@ export default function Home() {
       observer.observe(loader.current);
     }
   }, [handleObserver]);
-
-  const [favorites, setFavorites] = useState<Favorite[]>([]);
-
-  useEffect(() => {
-    const localFavs = localStorage.getItem("favorites");
-    const parsedFavs = localFavs && JSON.parse(localFavs);
-
-    if (parsedFavs) {
-      setFavorites(parsedFavs);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
-
-  console.log(results);
 
   return (
     <div>
