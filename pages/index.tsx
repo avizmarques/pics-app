@@ -9,28 +9,33 @@ import PhotoCard from '../components/PhotoCard';
 
 export default function Home() {
   const [search, setSearch] = useState<string>("");
-  const [results, setResults] = useState<Photo[]>([])
+  const [results, setResults] = useState<Photo[]>([]);
+  const [page, setPage] = useState<number>(1);
 
-  const getResults = async () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+
+  const getResults: (search: string, page: number) => void = async (query, page) => {
     try {
-
+      await setLoading(true)
+  
       const { data: dailyPhotos } = await axios.get(`https://api.unsplash.com/photos?client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`)
 
-      const { data: photos } = await axios.get(`https://api.unsplash.com/search/photos?query=${search}&client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`);
+      const { data: photos } = await axios.get(`https://api.unsplash.com/search/photos?query=${search}&page=1&client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`);
       
       const displayPhotos = photos.results.length > 0 ? photos.results : dailyPhotos;
       
       setResults(displayPhotos);
+
     } catch (e) {
+      setError(true)
       console.error(e);
     }
   }
 
-  console.log(results);
-
   useEffect(() => {
-    getResults()
-  }, [search])
+    getResults(search, page)  
+  }, [search, page])
 
   return (
     <div className="">

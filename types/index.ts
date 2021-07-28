@@ -1,9 +1,18 @@
 export type Photo = {
+  id: string;
   alt_description: string;
   urls: {
     regular: string;
   };
-}
+  downloads?: number;
+  location: {
+    country?: string;
+  };
+  likes?: number;
+  user: {
+    name: string;
+  };
+};
 
 // alt_description: "assorted fruits on brown wooden bowls"
 // blur_hash: "LMJQG-{y0NNY?Gn$RPXTso$zt7R+"
