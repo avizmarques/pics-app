@@ -48,7 +48,7 @@ export default function Home() {
 
       <main className="px-6 sm:px-8 md:px-12 lg:px-24 pt-8 flex flex-col">
         <div className="mb-12 flex sm:justify-end">
-          <SearchBar search={search} setSearch={setSearch} />
+          <SearchBar search={search} setSearch={setSearch} setPage={setPage} />
         </div>
         <div className="font-display text-2xl font-semibold text-dark-gray mb-4 md:mb-6 lg:mb-8">
           {search.length > 0

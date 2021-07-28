@@ -25,12 +25,11 @@ export function useFetch({ search, page }: Props) {
           `https://api.unsplash.com/search/photos?query=${search}&page=${page}&client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
         );
 
-        const displayPhotos =
-          photos.results.length > 0 ? photos.results : dailyPhotos;
-
-        setResults(displayPhotos);
-
-        // await setResults([...results, dailyPhotos]);
+        if (search.length === 0) {
+          setResults((prev) => [...prev, ...dailyPhotos]);
+        } else {
+          setResults((prev) => [...prev, ...photos.results]);
+        }
 
         setLoading(false);
       } catch (e) {
