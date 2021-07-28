@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
-import cn from "classnames";
 
 import HeartIcon from "./icons/HeartIcon";
 import SearchIcon from "./icons/SearchIcon";
@@ -21,12 +20,11 @@ export default function Footer() {
               />
             </div>
             <div
-              className={cn(
-                "text-sm mt-2",
+              className={`text-sm mt-2 ${
                 pathname !== "/favorites"
                   ? "font-semibold text-blue"
                   : "text-dark-gray"
-              )}
+              }`}
             >
               Search
             </div>
@@ -41,12 +39,11 @@ export default function Footer() {
               />
             </div>
             <div
-              className={cn(
-                "text-sm mt-2",
+              className={`text-sm mt-2" ${
                 pathname === "/favorites"
                   ? "font-semibold text-blue"
                   : "text-dark-gray"
-              )}
+              }`}
             >
               Favorites
             </div>
