@@ -18,15 +18,21 @@ export function useFetch({ search, page }: Props) {
         setLoading(true);
 
         const { data: dailyPhotos } = await axios.get(
-          `https://api.unsplash.com/photos?page=${page}&client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
+          `https://api.unsplash.com/photos?page=${page}&client_id=nqX4rDuguWWfD0YlLy_u5V9T7LaUoyIquPTxHZ0md1E`
         );
 
+        // client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk
+
         const { data: photos } = await axios.get(
-          `https://api.unsplash.com/search/photos?query=${search}&page=${page}&client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
+          `https://api.unsplash.com/search/photos?query=${search}&page=${page}&client_id=nqX4rDuguWWfD0YlLy_u5V9T7LaUoyIquPTxHZ0md1E`
         );
 
         if (search.length === 0) {
-          setResults((prev) => [...prev, ...dailyPhotos]);
+          if (page === 1) {
+            setResults(dailyPhotos);
+          } else {
+            setResults((prev) => [...prev, ...dailyPhotos]);
+          }
         } else {
           if (page === 1) {
             setResults(photos.results);
