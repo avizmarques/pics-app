@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
-import Head from 'next/head'
+import { useState, useEffect } from "react";
+import Head from "next/head";
 import axios from "axios";
 
 import { Photo } from "../types";
 
-import SearchBar from '../components/SearchBar'
-import PhotoCard from '../components/PhotoCard';
+import SearchBar from "../components/SearchBar";
+import PhotoCard from "../components/PhotoCard";
 
 export default function Home() {
   const [search, setSearch] = useState<string>("");
@@ -15,27 +15,34 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
-  const getResults: (search: string, page: number) => void = async (query, page) => {
+  const getResults: (search: string, page: number) => void = async (
+    query,
+    page
+  ) => {
     try {
-      await setLoading(true)
-  
-      const { data: dailyPhotos } = await axios.get(`https://api.unsplash.com/photos?client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`)
+      await setLoading(true);
 
-      const { data: photos } = await axios.get(`https://api.unsplash.com/search/photos?query=${search}&page=1&client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`);
-      
-      const displayPhotos = photos.results.length > 0 ? photos.results : dailyPhotos;
-      
+      const { data: dailyPhotos } = await axios.get(
+        `https://api.unsplash.com/photos?client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
+      );
+
+      const { data: photos } = await axios.get(
+        `https://api.unsplash.com/search/photos?query=${search}&page=1&client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
+      );
+
+      const displayPhotos =
+        photos.results.length > 0 ? photos.results : dailyPhotos;
+
       setResults(displayPhotos);
-
     } catch (e) {
-      setError(true)
+      setError(true);
       console.error(e);
     }
-  }
+  };
 
   useEffect(() => {
-    getResults(search, page)  
-  }, [search, page])
+    getResults(search, page);
+  }, [search, page]);
 
   return (
     <div className="">
@@ -47,15 +54,19 @@ export default function Home() {
 
       <main className="px-4 pt-8 flex flex-col">
         <div className="mb-12">
-          <SearchBar search={search} setSearch={setSearch}/>
+          <SearchBar search={search} setSearch={setSearch} />
         </div>
-        <div className="font-display text-xl text-dark-gray mb-4">Daily pictures</div>
-        <div className="h-screen w-full grid grid-cols-2 gap-4 md:grid-cols-4">{results && results.length > 0 && results.map((photo, i) => <PhotoCard key={i} photo={photo} />)}</div>
+        <div className="font-display text-2xl font-semibold text-dark-gray mb-4">
+          Daily pictures
+        </div>
+        <div className="h-screen w-full grid grid-cols-2 gap-4 md:grid-cols-4">
+          {results &&
+            results.length > 0 &&
+            results.map((photo, i) => <PhotoCard key={i} photo={photo} />)}
+        </div>
       </main>
 
-      <footer className="">
-       
-      </footer>
+      <footer className=""></footer>
     </div>
-  )
+  );
 }

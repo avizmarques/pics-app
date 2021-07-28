@@ -1,8 +1,11 @@
+import Head from "next/head";
+import Link from "next/link";
+
 import axios from "axios";
 import styled from "styled-components";
+
 import { Photo } from "../../types";
-import image from "next/image";
-import Head from "next/head";
+import ArrowBackIcon from "../../components/ArrowBackIcon";
 
 export async function getServerSideProps({ params }) {
   const { data: photo } = await axios.get(
@@ -25,8 +28,13 @@ export default function PhotoPage({ photo }: { photo: Photo }) {
       </Head>
 
       <main className="h-screen">
-        <div className="w-screen h-3/5 mb-8">
+        <div className="w-screen h-3/5 mb-8 relative">
           <PhotoCont url={photo.urls.regular} />
+          <Link href="/" passHref>
+            <div className="absolute top-12 left-8 h-8">
+              <ArrowBackIcon color="white" />
+            </div>
+          </Link>
         </div>
         <div className="grid grid-cols-2 gap-8 px-8">
           <div>

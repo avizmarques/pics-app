@@ -10,6 +10,7 @@ module.exports = {
       base: ["16px", "19px"],
       lg: ["20px", "28px"],
       xl: ["24px", "28px"],
+      "2xl": ["34px", "40px"],
     },
     colors: {
       "darkest-gray": "#1F2933",
