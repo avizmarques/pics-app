@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 import { Photo } from "../../types";
 import ArrowBackIcon from "../../components/ArrowBackIcon";
+import Footer from "../../components/Footer";
 
 export async function getServerSideProps({ params }) {
   const { data: photo } = await axios.get(
@@ -59,6 +60,7 @@ export default function PhotoPage({ photo }: { photo: Photo }) {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

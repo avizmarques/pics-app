@@ -17,7 +17,9 @@ export default function SearchBar({
         className="bg-transparent outline-none w-full"
         placeholder="Search photos"
       />
-      <SearchIcon />
+      <div className="h-6">
+        <SearchIcon />
+      </div>
     </div>
   );
 }

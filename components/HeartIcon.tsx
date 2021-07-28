@@ -1,24 +1,25 @@
-export default function SearchIcon({
+export default function HeartIcon({
   color,
+  fill,
   strokeWidth,
 }: {
   color?: string;
+  fill?: string;
   strokeWidth?: string;
 }) {
   return (
     <svg
-      width="100%"
-      height="100%"
       stroke={color ? color : "currentColor"}
-      fill="none"
+      fill={fill ? fill : "none"}
       strokeWidth={strokeWidth ? strokeWidth : "2"}
       viewBox="0 0 24 24"
       strokeLinecap="round"
       strokeLinejoin="round"
+      height="100%"
+      width="100%"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="11" cy="11" r="8"></circle>
-      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
     </svg>
   );
 }

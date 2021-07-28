@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import axios from "axios";
 
@@ -6,6 +6,7 @@ import { Photo } from "../types";
 
 import SearchBar from "../components/SearchBar";
 import PhotoCard from "../components/PhotoCard";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const [search, setSearch] = useState<string>("");
@@ -44,6 +45,13 @@ export default function Home() {
     getResults(search, page);
   }, [search, page]);
 
+  const [favorites, setFavorites] = useState<string[]>([]);
+
+  // useEffect(() => {
+  //   localStorage.setItem("favorites", JSON.stringify(favorites));
+  //   console.log("localstorage", localStorage);
+  // }, [favorites]);
+
   return (
     <div className="">
       <Head>
@@ -62,11 +70,20 @@ export default function Home() {
         <div className="h-screen w-full grid grid-cols-2 gap-4 md:grid-cols-4">
           {results &&
             results.length > 0 &&
-            results.map((photo, i) => <PhotoCard key={i} photo={photo} />)}
+            results.map((photo, i) => (
+              <PhotoCard
+                key={i}
+                photo={photo}
+                setFavorites={setFavorites}
+                favorites={favorites}
+              />
+            ))}
         </div>
       </main>
 
-      <footer className=""></footer>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }

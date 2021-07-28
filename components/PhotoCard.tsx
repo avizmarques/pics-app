@@ -1,14 +1,47 @@
+import { Dispatch, isValidElement, SetStateAction } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 
 import { Photo } from "../types";
+import HeartIcon from "./HeartIcon";
 
-export default function PhotoCard({ photo }: { photo: Photo }) {
+export default function PhotoCard({
+  photo,
+  setFavorites,
+  favorites,
+}: {
+  photo: Photo;
+  setFavorites: Dispatch<SetStateAction<string[]>>;
+  favorites: string[];
+}) {
+  console.log(favorites);
+
+  const isFav = favorites.includes(photo.id);
+
+  const toggleFav: (isFav: boolean, id: string) => void = (isFav, id) => {
+    if (isFav) {
+      setFavorites(favorites.filter((fav) => fav !== id));
+    } else {
+      setFavorites([...favorites, photo.id]);
+    }
+  };
+
   return (
-    <div className="h-60 md:h-80 rounded-lg overflow-hidden">
+    <div className="h-48 md:h-80 rounded-lg overflow-hidden relative">
       <Link href={`/photos/${photo.id}`} passHref>
         <PhotoBg url={photo.urls.regular} />
       </Link>
+      <button
+        className="outline-none h-9 w-9 bg-white rounded-full absolute bottom-5 right-5 flex items-center justify-center"
+        onClick={() => toggleFav(isFav, photo.id)}
+      >
+        <div className="h-4">
+          <HeartIcon
+            fill={isFav ? "#1B3CEA" : "none"}
+            color={isFav ? "#1B3CEA" : "#323F4B"}
+          />
+        </div>
+      </button>
     </div>
   );
 }
