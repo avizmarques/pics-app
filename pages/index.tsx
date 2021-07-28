@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import axios from "axios";
 
-import { Photo } from "../types";
+import { Favorite, Photo } from "../types";
 
 import SearchBar from "../components/SearchBar";
 import PhotoCard from "../components/PhotoCard";
@@ -47,10 +47,19 @@ export default function Home() {
 
   const [favorites, setFavorites] = useState<string[]>([]);
 
-  // useEffect(() => {
-  //   localStorage.setItem("favorites", JSON.stringify(favorites));
-  //   console.log("localstorage", localStorage);
-  // }, [favorites]);
+  useEffect(() => {
+    const localFavs = localStorage.getItem("favorites");
+    const parsedFavs = localFavs && JSON.parse(localFavs);
+
+    if (parsedFavs) {
+      setFavorites(parsedFavs);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    console.log("localstorage", localStorage);
+  }, [favorites]);
 
   return (
     <div className="">

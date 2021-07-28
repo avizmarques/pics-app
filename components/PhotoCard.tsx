@@ -14,15 +14,13 @@ export default function PhotoCard({
   setFavorites: Dispatch<SetStateAction<string[]>>;
   favorites: string[];
 }) {
-  console.log(favorites);
+  const isFav = favorites.includes(photo.urls.regular);
 
-  const isFav = favorites.includes(photo.id);
-
-  const toggleFav: (isFav: boolean, id: string) => void = (isFav, id) => {
+  const toggleFav: (isFav: boolean, id: string) => void = (isFav, url) => {
     if (isFav) {
-      setFavorites(favorites.filter((fav) => fav !== id));
+      setFavorites(favorites.filter((fav) => fav !== url));
     } else {
-      setFavorites([...favorites, photo.id]);
+      setFavorites([...favorites, photo.urls.regular]);
     }
   };
 
@@ -33,7 +31,7 @@ export default function PhotoCard({
       </Link>
       <button
         className="outline-none h-9 w-9 bg-white rounded-full absolute bottom-5 right-5 flex items-center justify-center"
-        onClick={() => toggleFav(isFav, photo.id)}
+        onClick={() => toggleFav(isFav, photo.urls.regular)}
       >
         <div className="h-4">
           <HeartIcon
