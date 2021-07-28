@@ -7,15 +7,17 @@ export default function SearchBar({
   setSearch,
   setPage,
 }: {
-  search: string;
-  setSearch: Dispatch<SetStateAction<string>>;
-  setPage: Dispatch<SetStateAction<number>>;
+  search?: string;
+  setSearch?: Dispatch<SetStateAction<string>>;
+  setPage?: Dispatch<SetStateAction<number>>;
 }) {
   return (
     <div className="bg-light-gray rounded-full py-3 px-6 text-dark-gray text-sm flex justify-between items-center w-full sm:w-72">
       <input
         value={search}
         onChange={(e) => {
+          if (!setPage || !setSearch) return;
+
           setPage(1);
           setSearch(e.target.value);
         }}
