@@ -1,3 +1,4 @@
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -5,10 +6,10 @@ import axios from "axios";
 import styled from "styled-components";
 
 import { Photo } from "../../types";
-import ArrowBackIcon from "../../components/ArrowBackIcon";
+import ArrowBackIcon from "../../components/icons/ArrowBackIcon";
 import Footer from "../../components/Footer";
 
-export async function getServerSideProps({ params }) {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { data: photo } = await axios.get(
     `https://api.unsplash.com/photos/${params.id}?client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
   );
@@ -18,7 +19,7 @@ export async function getServerSideProps({ params }) {
       photo,
     },
   };
-}
+};
 
 export default function PhotoPage({ photo }: { photo: Photo }) {
   return (
@@ -59,6 +60,7 @@ export default function PhotoPage({ photo }: { photo: Photo }) {
             </div>
           </div>
         </div>
+        <div className="h-52" />
       </main>
       <Footer />
     </div>
@@ -68,7 +70,7 @@ export default function PhotoPage({ photo }: { photo: Photo }) {
 const PhotoCont = styled.div`
   height: 100%;
   width: 100%;
-  background-image: url(${(props) => props.url});
+  background-image: url(${(props: { url: string }) => props.url});
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

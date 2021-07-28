@@ -1,49 +1,73 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Head from "next/head";
-import axios from "axios";
 
-import { Favorite, Photo } from "../types";
+import { Favorite } from "../types";
 
 import SearchBar from "../components/SearchBar";
 import PhotoCard from "../components/PhotoCard";
 import Footer from "../components/Footer";
+import { useFetch } from "../lib/useFetch";
 
 export default function Home() {
   const [search, setSearch] = useState<string>("");
-  const [results, setResults] = useState<Photo[]>([]);
   const [page, setPage] = useState<number>(1);
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  // const [results, setResults] = useState<Photo[]>([]);
 
-  const getResults: (search: string, page: number) => void = async (
-    query,
-    page
-  ) => {
-    try {
-      await setLoading(true);
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [error, setError] = useState<boolean>(false);
 
-      const { data: dailyPhotos } = await axios.get(
-        `https://api.unsplash.com/photos?client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
-      );
+  // const getResults: (search: string, page: number) => void = async (
+  //   query,
+  //   page
+  // ) => {
+  //   try {
+  //     await setLoading(true);
 
-      const { data: photos } = await axios.get(
-        `https://api.unsplash.com/search/photos?query=${search}&page=1&client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
-      );
+  //     const { data: dailyPhotos } = await axios.get(
+  //       `https://api.unsplash.com/photos?client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
+  //     );
 
-      const displayPhotos =
-        photos.results.length > 0 ? photos.results : dailyPhotos;
+  //     const { data: photos } = await axios.get(
+  //       `https://api.unsplash.com/search/photos?query=${search}&page=1&client_id=oqZA5hBGwDX5N2bzWxoZ8Ni4oaC1gFtuRa0bV4qjBbk`
+  //     );
 
-      setResults(displayPhotos);
-    } catch (e) {
-      setError(true);
-      console.error(e);
+  //     const displayPhotos =
+  //       photos.results.length > 0 ? photos.results : dailyPhotos;
+
+  //     setResults(displayPhotos);
+  //   } catch (e) {
+  //     setError(true);
+  //     console.error(e);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getResults(search, page);
+  // }, [search, page]);
+
+  const { loading, error, results } = useFetch({ search, page });
+  const loader = useRef<any>(null);
+
+  const handleObserver = useCallback((entries) => {
+    const target = entries[0];
+
+    if (target.isIntersecting) {
+      setPage((prev) => prev + 1);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    getResults(search, page);
-  }, [search, page]);
+    const option = {
+      root: null,
+      rootMargin: "20px",
+      threshold: 0,
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loader.current) {
+      observer.observe(loader.current);
+    }
+  }, [handleObserver]);
 
   const [favorites, setFavorites] = useState<Favorite[]>([]);
 
@@ -58,15 +82,15 @@ export default function Home() {
 
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
-    console.log(localStorage);
   }, [favorites]);
 
+  console.log(results);
+
   return (
-    <div className="">
+    <div>
       <Head>
         <title>Pictures app</title>
         <meta name="description" content="Alex's pictures app" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="px-6 sm:px-8 md:px-12 lg:px-24 pt-8 flex flex-col">
@@ -91,12 +115,10 @@ export default function Home() {
               />
             ))}
         </div>
+        <div ref={loader} />
         <div className="h-52" />
       </main>
-
-      <footer>
-        <Footer />
-      </footer>
+      <Footer />
     </div>
   );
 }

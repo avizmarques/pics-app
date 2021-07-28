@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
-import SearchIcon from "./SearchIcon";
+import SearchIcon from "./icons/SearchIcon";
 
 export default function SearchBar({
   search,

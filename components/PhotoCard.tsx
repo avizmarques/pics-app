@@ -1,9 +1,9 @@
-import { Dispatch, isValidElement, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 
 import { Favorite, Photo } from "../types";
-import HeartIcon from "./HeartIcon";
+import HeartIcon from "./icons/HeartIcon";
 
 export default function PhotoCard({
   id,
@@ -55,7 +55,7 @@ export default function PhotoCard({
 
 const PhotoBg = styled.div`
   height: 100%;
-  background-image: url(${(props) => props.url});
+  background-image: url(${(props: { url: string }) => props.url});
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
