@@ -28,7 +28,11 @@ export function useFetch({ search, page }: Props) {
         if (search.length === 0) {
           setResults((prev) => [...prev, ...dailyPhotos]);
         } else {
-          setResults((prev) => [...prev, ...photos.results]);
+          if (page === 1) {
+            setResults(photos.results);
+          } else {
+            setResults((prev) => [...prev, ...photos.results]);
+          }
         }
 
         setLoading(false);
