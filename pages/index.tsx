@@ -45,7 +45,7 @@ export default function Home() {
     getResults(search, page);
   }, [search, page]);
 
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<Favorite[]>([]);
 
   useEffect(() => {
     const localFavs = localStorage.getItem("favorites");
@@ -58,7 +58,7 @@ export default function Home() {
 
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
-    console.log("localstorage", localStorage);
+    console.log(localStorage);
   }, [favorites]);
 
   return (
@@ -82,11 +82,23 @@ export default function Home() {
             results.map((photo, i) => (
               <PhotoCard
                 key={i}
-                photo={photo}
+                url={photo.urls.regular}
+                id={photo.id}
                 setFavorites={setFavorites}
                 favorites={favorites}
               />
             ))}
+          {/* {favorites &&
+            favorites.length > 0 &&
+            favorites.map((fav, i) => (
+              <PhotoCard
+                key={i}
+                url={fav.url}
+                id={fav.id}
+                setFavorites={setFavorites}
+                favorites={favorites}
+              />
+            ))} */}
         </div>
       </main>
 

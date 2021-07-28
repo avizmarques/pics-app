@@ -4,8 +4,21 @@ import Link from "next/link";
 
 import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
+import { Favorite } from "../types";
+import PhotoCard from "../components/PhotoCard";
 
 export default function Favorites() {
+  const [favorites, setFavorites] = useState<Favorite[]>([]);
+
+  useEffect(() => {
+    const localFavs = localStorage.getItem("favorites");
+    const parsedFavs = localFavs && JSON.parse(localFavs);
+
+    if (parsedFavs) {
+      setFavorites(parsedFavs);
+    }
+  }, []);
+
   return (
     <div>
       <Head>
@@ -21,7 +34,19 @@ export default function Favorites() {
         <div className="font-display text-2xl font-semibold text-dark-gray mb-4">
           Favorites
         </div>
-        <div className="h-screen w-full grid grid-cols-2 gap-4 md:grid-cols-4"></div>
+        <div className="h-screen w-full grid grid-cols-2 gap-4 md:grid-cols-4">
+          {favorites &&
+            favorites.length > 0 &&
+            favorites.map((fav, i) => (
+              <PhotoCard
+                key={i}
+                url={fav.url}
+                id={fav.id}
+                setFavorites={setFavorites}
+                favorites={favorites}
+              />
+            ))}
+        </div>
       </main>
       <Footer />
     </div>
